@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
-use App\Services\Contracts\PostContract;
-use Illuminate\Http\Request;
-
+use App\Dto\PostDto;
+use App\Http\Requests\PostRequest;
+use App\Services\Facades\PostFacade;
 class PostsController extends Controller
 {
-    public function store(Request $request ,PostContract $postContract)
+    public function store(PostRequest $request)
     {
-        return response()->json($postContract->createPost($request));
+        return response()->json(PostFacade::createPost(PostDto::create($request)));
 
     }
 }

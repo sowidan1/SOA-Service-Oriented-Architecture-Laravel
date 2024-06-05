@@ -2,23 +2,22 @@
 
 namespace App\Services\Services;
 
+use App\Dto\PostDto;
 use App\Models\Post;
-use Illuminate\Http\Request;
+use App\Repositories\PostRepository;
 use App\Services\Contracts\PostContract;
-
 class PostService implements PostContract{
 
-    public function createPost(Request $request) : Post {
+    protected PostRepository $postRepository;
 
-        $request->validate([
-            'title' => 'required|max:50',
-            'content' => 'required|max:255',
-        ]);
+    public function __construct()
+    {
+        $this->postRepository = new PostRepository();
+    }
 
-        return Post::create([
-            'title' => $request->title,
-            'content' => $request->content,
-        ]);
+    public function createPost(PostDto $postDto) : Post {
+
+        return $this->postRepository->create($postDto);
 
     }
 

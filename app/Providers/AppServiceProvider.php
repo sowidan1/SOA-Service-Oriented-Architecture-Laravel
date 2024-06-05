@@ -13,10 +13,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(
-            PostContract::class,
-            PostService::class
-        );
+        // $this->app->bind(PostContract::class,PostService::class );
+
+        $this->app->bind('PostService', function () {
+            return new PostService();
+        });
     }
 
     /**
